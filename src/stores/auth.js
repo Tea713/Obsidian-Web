@@ -1,24 +1,16 @@
-import { defineStore } from 'pinia'
-import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "/src/firebase/init.js";
-import { GithubAuthProvider, signOut } from 'firebase/auth';
+// auth.js
+import { defineStore } from 'pinia';
+import { signInWithPopup, GithubAuthProvider, signOut, onAuthStateChanged  } from 'firebase/auth';
+import { auth, provider } from '/src/firebase/init.js';
 
 export const useAuthStore = defineStore('auth', {
-    state: () => {
-        return {
-            user: null,
-        }
-    },
+    state: () => ({
+        user: null,
+    }),
     getters: {
-        getUser(state) {
-            return state.user;
-        },
-        getUserEmail(state) {
-            return state.user.email;
-        },
-        isLoggedIn(state) {
-            return state.user !== null;
-        }
+        getUser: (state) => state.user,
+        getUserEmail: (state) => (state.user ? state.user.email : null),
+        isLoggedIn: (state) => state.user !== null,
     },
     actions: {
         loginWithGithub() {
@@ -52,5 +44,11 @@ export const useAuthStore = defineStore('auth', {
                 this.user = null;
             });
         },
-    }
-})
+        async initializeAuth() {
+            // Check if there is a user on page load
+            onAuthStateChanged(auth, (user) => {
+              this.user = user;
+            });
+          },
+    },
+});
