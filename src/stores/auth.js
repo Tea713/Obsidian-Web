@@ -1,32 +1,41 @@
 // auth.js
 import { defineStore } from 'pinia';
-import { signInWithPopup, GithubAuthProvider, signOut, onAuthStateChanged  } from 'firebase/auth';
+import { signInWithPopup, GithubAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth, provider } from '/src/firebase/init.js';
+import { Octokit } from "@octokit/core";
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         user: null,
+        token: null,
+        username: null,
     }),
     getters: {
         getUser: (state) => state.user,
+        getToken: (state) => state.token,
+        getUsername: (state) => state.username,
         getUserEmail: (state) => (state.user ? state.user.email : null),
         isLoggedIn: (state) => state.user !== null,
     },
     actions: {
         loginWithGithub() {
             signInWithPopup(auth, provider)
-                .then((result) => {
+                .then(async (result) => {
                     // This gives you a GitHub Access Token. You can use it to access the GitHub API.
                     const credential = GithubAuthProvider.credentialFromResult(result);
-                    const token = credential.accessToken;
+                    
+                    this.token = credential.accessToken;
 
                     // The signed-in user info.
                     this.user = result.user;
+
+                    // Fetch the username from the GitHub API.
+                    const octokit = new Octokit({ auth: this.token });
+                    const { data: user } = await octokit.rest.users.getAuthenticated();
+                    this.username = user.login;
+
                     // IdP data available using getAdditionalUserInfo(result)
                     // ...
-
-                    //get github username
-                    this.fetchGitHubUsername(token);
                 })
                 .catch((error) => {
                     // Handle Errors here.
@@ -47,8 +56,8 @@ export const useAuthStore = defineStore('auth', {
         async initializeAuth() {
             // Check if there is a user on page load
             onAuthStateChanged(auth, (user) => {
-              this.user = user;
+                this.user = user;
             });
-          },
+        },
     },
 });
