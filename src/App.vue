@@ -1,18 +1,19 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from 'vue-router'
+import GitHubLogin from '/src/components/GitHubLogin.vue'
+export default {
+  components: {
+    GitHubLogin
+  }
+}
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
+  <GitHubLogin />
+  <nav>
+      <RouterLink to="/">Home</RouterLink>
+    <RouterLink to="/about">About</RouterLink>
+  </nav>
   <RouterView />
 </template>
 
