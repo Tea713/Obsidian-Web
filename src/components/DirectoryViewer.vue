@@ -6,7 +6,7 @@
         <DirectoryViewer v-show="item.isOpen" :items="item.contents" />
       </div>
       <div v-else>
-        <p>&nbsp&nbsp {{ item.name }}</p>
+        <p> {{ item.name }}</p>
       </div>
     </div>
   </div>
