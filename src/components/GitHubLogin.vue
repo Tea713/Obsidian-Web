@@ -1,11 +1,10 @@
 <template>
   <div>
-    <p>{{ getToken }}</p>
     <button v-if="!isLoggedIn" @click="loginWithGithub">
       Login with GitHub
     </button>
     <div v-else>
-      <p>Welcome, {{ getUsername }}!</p>
+      <p>Welcome, {{ getUserEmail }}!</p>
       <button @click="logout">Logout</button>
     </div>
   </div>

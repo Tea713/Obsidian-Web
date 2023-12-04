@@ -30,13 +30,13 @@ export const useAuthStore = defineStore('auth', {
                     console.log('Logged in user:', this.user);
 
                     // Fetch the username from the GitHub API.
-                    const octokit = new Octokit({ auth: this.getToken });
-                    const { data: user } = await octokit.rest.users.getAuthenticated();
-                    console.log('GitHub user:', user);
+                    // const octokit = new Octokit({ auth: this.getToken });
+                    // const { data: user } = await octokit.rest.users.getAuthenticated();
+                    // console.log('GitHub user:', user);
 
-                    this.username = user.login;
-                    console.log('About to log this.username');
-                    console.log(this.username);
+                    // this.username = user.login;
+                    // console.log('About to log this.username');
+                    // console.log(this.username);
 
                     // IdP data available using getAdditionalUserInfo(result)
                     // ...
