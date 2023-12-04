@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>{{ getToken }}</p>
     <button v-if="!isLoggedIn" @click="loginWithGithub">
       Login with GitHub
     </button>
@@ -9,21 +10,20 @@
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "/src/stores/auth";
 
 export default {
   computed: {
-    ...mapState(useAuthStore, ["isLoggedIn", "getUserEmail", "getUser"]),
+    ...mapState(useAuthStore, ["isLoggedIn", "getToken", "getUsername", "getUserEmail"]),
   },
   methods: {
     ...mapActions(useAuthStore, ["loginWithGithub", "logout"]),
   },
 };
 </script>
-  
-  <style>
+
+<style>
 </style>
-    
