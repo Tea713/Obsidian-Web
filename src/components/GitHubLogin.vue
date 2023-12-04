@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>{{ getToken }}</p>
     <button v-if="!isLoggedIn" @click="loginWithGithub">
       Login with GitHub
     </button>

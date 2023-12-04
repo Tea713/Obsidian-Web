@@ -1,1 +1,5 @@
 @import './base.css';
+
+.nav-link {
+ padding-right: 2rem;   
+}
