@@ -13,6 +13,9 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+//Syntax Highlighting Style
+import 'highlight.js/styles/github-dark-dimmed.css';
+
 const vuetify = createVuetify({
     components,
     directives
@@ -25,7 +28,5 @@ app.use(router)
 const authStore = useAuthStore();
 authStore.initializeAuth();
 
-//Adding Vuetify
 app.use(vuetify)
-
 app.mount('#app')

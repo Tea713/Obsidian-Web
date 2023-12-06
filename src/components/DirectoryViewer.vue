@@ -2,11 +2,11 @@
   <div>
     <div v-for="item in sortedItems" :key="item.name">
       <div v-if="item.type === 'dir'" @click="toggle(item)">
-        <p> >{{ item.name }}</p>
+        <p class="item"> >{{ item.name }}</p>
         <DirectoryViewer v-show="item.isOpen" :items="item.contents" />
       </div>
       <div v-else>
-        <p> {{ item.name }}</p>
+        <p class="item"  @click.stop="setCurrentNote(item)"> {{ item.name }}</p>
       </div>
     </div>
   </div>
@@ -27,7 +27,6 @@ export default {
   computed: {
     ...mapState(useNotesStore, [
       "getNotes",
-      "getRepositories",
       "getCurrentRepository",
     ]),
     sortedItems() {
@@ -45,8 +44,7 @@ export default {
   methods: {
     ...mapActions(useNotesStore, [
       "fetchNotes",
-      "fetchRepositories",
-      "setCurrentRepository",
+      "setCurrentNote",
     ]),
     async toggle(item) {
       if (!item.contents) {
@@ -63,3 +61,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.item:hover {
+  background-color: rgb(0, 255, 140); /* Change this to the color you want */
+}
+</style>
