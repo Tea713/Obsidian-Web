@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div v-if="isLoggedIn">
     <div v-for="item in sortedItems" :key="item.name">
       <div v-if="item.type === 'dir'" @click="toggle(item)">
-        <p class="item"> >{{ item.name }}</p>
+        <p class="item">>{{ item.name }}</p>
         <DirectoryViewer v-show="item.isOpen" :items="item.contents" />
       </div>
       <div v-else>
-        <p class="item"  @click.stop="setCurrentNote(item)"> {{ item.name }}</p>
+        <p class="item" @click.stop="setCurrentNote(item)">{{ item.name }}</p>
       </div>
     </div>
   </div>
@@ -14,6 +14,7 @@
 
 <script>
 import { useNotesStore } from "@/stores/notes";
+import { useAuthStore } from "@/stores/auth";
 import { mapState, mapActions } from "pinia";
 
 export default {
@@ -25,27 +26,22 @@ export default {
     },
   },
   computed: {
-    ...mapState(useNotesStore, [
-      "getNotes",
-      "getCurrentRepository",
-    ]),
+    ...mapState(useNotesStore, ["getNotes", "getCurrentRepository"]),
+    ...mapState(useAuthStore, ["getUsername", "isLoggedIn"]),
     sortedItems() {
-        return [...this.items].sort((a, b) => {
-            if (a.type === 'dir' && b.type !== 'dir') {
-                return -1;
-            }
-            if (a.type !== 'dir' && b.type === 'dir') {
-                return 1;
-            }
-            return a.name.localeCompare(b.name);
-        });
+      return [...this.items].sort((a, b) => {
+        if (a.type === "dir" && b.type !== "dir") {
+          return -1;
+        }
+        if (a.type !== "dir" && b.type === "dir") {
+          return 1;
+        }
+        return a.name.localeCompare(b.name);
+      });
     },
   },
   methods: {
-    ...mapActions(useNotesStore, [
-      "fetchNotes",
-      "setCurrentNote",
-    ]),
+    ...mapActions(useNotesStore, ["fetchNotes", "setCurrentNote"]),
     async toggle(item) {
       if (!item.contents) {
         // If the directory is not loaded yet, fetch its contents
@@ -63,7 +59,5 @@ export default {
 </script>
 
 <style scoped>
-.item:hover {
-  background-color: rgb(0, 255, 140); /* Change this to the color you want */
-}
+
 </style>

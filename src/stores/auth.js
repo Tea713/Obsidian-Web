@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { signInWithPopup, GithubAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth, provider } from '/src/firebase/init.js';
-import { Octokit } from "@octokit/core";
+import createGithubApi from '/src/api/githubApi.js';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -22,21 +22,18 @@ export const useAuthStore = defineStore('auth', {
                 .then(async (result) => {
                     // This gives you a GitHub Access Token. You can use it to access the GitHub API.
                     const credential = GithubAuthProvider.credentialFromResult(result);
-                    
+
+                    // The signed-in user info.
                     this.token = credential.accessToken;
+                    localStorage.setItem('githubToken', this.token); // Store the token in localStorage
+
+                    // Get the username
+                    const api = createGithubApi(this.token);
+                    this.username = await api.fetchUsername();
+                    localStorage.setItem('username', this.username); // Store the username in localStorage
 
                     // The signed-in user info.
                     this.user = result.user;
-                    console.log('Logged in user:', this.user);
-
-                    // Fetch the username from the GitHub API.
-                    // const octokit = new Octokit({ auth: this.getToken });
-                    // const { data: user } = await octokit.rest.users.getAuthenticated();
-                    // console.log('GitHub user:', user);
-
-                    // this.username = user.login;
-                    // console.log('About to log this.username');
-                    // console.log(this.username);
 
                     // IdP data available using getAdditionalUserInfo(result)
                     // ...
@@ -56,12 +53,18 @@ export const useAuthStore = defineStore('auth', {
             signOut(auth).then(() => {
                 console.log('User signed out');
                 this.user = null;
+                this.token = null;
+                localStorage.removeItem('githubToken'); // Clear the token from localStorage
             });
         },
         async initializeAuth() {
             // Check if there is a user on page load
             onAuthStateChanged(auth, (user) => {
                 this.user = user;
+                if (user) {
+                    this.token = localStorage.getItem('githubToken'); // Retrieve the token from localStorage
+                    this.username = localStorage.getItem('username');// Retrieve the username from localStorage
+                }
             });
         },
     },

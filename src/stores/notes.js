@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import createGithubApi from '/src/api/githubApi.js';
 import { useAuthStore } from './auth';
-const TEST_TOKEN = "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"
 
 export const useNotesStore = defineStore('notes', {
   state: () => ({
@@ -12,21 +11,27 @@ export const useNotesStore = defineStore('notes', {
   }),
   getters: {
     getNotes: (state) => (path) => state.notes[path] || [],
-    getRepositories: (state) => state.repositories, 
+    getRepositories: (state) => state.repositories,
     getCurrentRepository: (state) => state.currentRepository,
     getCurrentNote: (state) => state.currentNote,
   },
   actions: {
-    async fetchNotes(repo, path='') {
+    async fetchNotes(repo, path = '') {
       try {
         const authStore = useAuthStore(); // access the auth store
+        const api = createGithubApi(authStore.token); // use the token from the auth store
+        if(!authStore.token) {
+          console.log("No token");
+        }
+        if(!authStore.getUsername) {
+          console.log("No username");
+        }
+        if(!path) {
+          console.log("path");
+        }
 
-        //const api = createGithubApi(authStore.token); // use the token from the auth store
-        const api = createGithubApi(TEST_TOKEN); 
-
-        const notes = await api.fetchNotes('Tea713', repo, path);
+        const notes = await api.fetchNotes(authStore.getUsername, repo, path);
         this.notes[path] = notes;
-        //console.log(notes);
       } catch (error) {
         console.error('Failed to fetch notes:', error);
         // handle the error appropriately
@@ -35,8 +40,11 @@ export const useNotesStore = defineStore('notes', {
     async fetchRepositories() { // new action to fetch the list of repositories
       try {
         const authStore = useAuthStore();
-        //const api = createGithubApi(authStore.token);
-        const api = createGithubApi(TEST_TOKEN);
+        const api = createGithubApi(authStore.token);
+        if(!authStore.token) {
+          console.log("No token");
+        }
+
         const repositories = await api.fetchRepositories();
         this.repositories = repositories;
         //console.log(repositories);
@@ -50,7 +58,6 @@ export const useNotesStore = defineStore('notes', {
     },
     setCurrentNote(note) {
       this.currentNote = note;
-      console.log(note.content);
     },
   },
 });
