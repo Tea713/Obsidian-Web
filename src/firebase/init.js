@@ -25,5 +25,6 @@ const analytics = getAnalytics(app);
 const db = getFirestore()
 const auth = getAuth(app);
 const provider = new GithubAuthProvider();
-provider.addScope('user:read:user');
+provider.addScope('repo');
+provider.addScope('read:user');
 export { db, auth, provider }
