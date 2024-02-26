@@ -6,7 +6,8 @@
     "serve": "vite preview",
     "build": "vite build",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@octokit/core": "^5.0.2",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.4.0",
+    "gh-pages": "^6.1.1",
     "vite": "^4.4.11",
     "vite-plugin-vuetify": "^1.0.0-alpha.12"
   }
