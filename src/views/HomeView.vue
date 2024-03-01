@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>Welcome to Obsidian Web</h1>
-    <p>Obsidian is a powerful knowledge base that works on top of a local folder of plain text Markdown files. I tried to create a web viewers of Obsidian.md files that have been uploaded to Github for quickaccess on mobile devices.</p>
+    <p>Obsidian is a powerful knowledge base that works on top of a local folder of plain text Markdown files. I tried to create a web viewers of Obsidian.md files that have been uploaded to Github for quickaccess. While git can already display markdown files, I hope this project will provide users with friendly and familiar UI like that of the desktop Obsidian app.</p>
     <p>Login and choose your repositories containing your markdown files above.</p>
     <button @click="startUsingApp">Start Using Obsidian Web</button>
   </div>

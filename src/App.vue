@@ -51,7 +51,7 @@ export default {
         <h2 class="app-title">OWV</h2>
         <div class="nav-links">
           <RouterLink to="/" class="nav-link" active-class="active-link">Home</RouterLink>
-          <RouterLink to="/about" class="nav-link" active-class="active-link">About</RouterLink>
+          <RouterLink to="/changelog" class="nav-link" active-class="active-link">Changelog</RouterLink>
           <RouterLink to="/notes" class="nav-link" active-class="active-link">Viewer</RouterLink>
         </div>
         <SelectRepo />
@@ -73,11 +73,5 @@ export default {
 </template>
 
 <style scoped>
-/* .app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; 
-} */
-
 
 </style>
