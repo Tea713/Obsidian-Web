@@ -18,14 +18,12 @@
     "markdown-it": "^13.0.2",
     "markdown-it-front-matter": "^0.2.3",
     "pinia": "^2.1.7",
-    "vite-plugin-vuetify": "^1.0.2",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.4.0",
     "gh-pages": "^6.1.1",
-    "vite": "^4.4.11",
-    "vite-plugin-vuetify": "^1.0.0-alpha.12"
+    "vite": "^4.4.11"
   }
 }

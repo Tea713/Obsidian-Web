@@ -1,30 +1,15 @@
-# tn-project-two
+# Obsidian Web
 
-This template should help get you started developing with Vue 3 in Vite.
+A web version of Obsidian.md. Available at: https://tea713.github.io/Obsidian-Web/
 
-## Recommended IDE Setup
+## UI
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Provide friendly UI similar to that of Obsidian.md. 
 
-## Customize configuration
+## Firebase Integration with GitHub
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Use GitHub authentication by Firebase to access notes from repository.
 
-## Project Setup
+## Markdown suppport
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-# Obsidian-Web
+Displaying Markdown files with math formulas.
